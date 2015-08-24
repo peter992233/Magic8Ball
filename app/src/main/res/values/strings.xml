@@ -4,4 +4,12 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="blank"></string>
+    <item name="TextInput" type="id"></item>
+    <item name="ImageContainer" type="id"></item>
+    <item name="Background" type="id"></item>
+    <item name="CircleImage" type="id"></item>
+    <item name="ShakeButton" type="id"></item>
+    <item name="Responder" type="id"></item>
+
+
 </resources>

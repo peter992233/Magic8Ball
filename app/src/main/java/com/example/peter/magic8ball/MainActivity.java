@@ -1,14 +1,21 @@
 package com.example.peter.magic8ball;
 
+import android.app.ActionBar;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -29,13 +36,65 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
 
-        //Instantiating the UI
-        EditText TextInput = (EditText) findViewById(R.id.TextInput);
-        Button shakeButton = (Button) findViewById(R.id.ShakeButton);
+        RelativeLayout relativeLayout_623 = new RelativeLayout(this);
+        RelativeLayout.LayoutParams layout_796 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        relativeLayout_623.setLayoutParams(layout_796);
 
+        EditText TextInput = new EditText(this);
+        TextInput.setId(R.id.TextInput);
+        TextInput.setRawInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        RelativeLayout.LayoutParams  layout_532 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,50,getResources().getDisplayMetrics()));
+        TextInput.setSingleLine();
+        TextInput.setLayoutParams(layout_532);
+        relativeLayout_623.addView(TextInput);
+
+        RelativeLayout ImageContainer = new RelativeLayout(this);
+        ImageContainer.setId(R.id.ImageContainer);
+        RelativeLayout.LayoutParams layout_947 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        layout_947.addRule(RelativeLayout.BELOW, TextInput.getId());
+        ImageContainer.setLayoutParams(layout_947);
+
+        ImageView Background = new ImageView(this);
+        Background.setId(R.id.Background);
+        Background.setBackgroundResource(R.drawable.background);
+        RelativeLayout.LayoutParams layout_825 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layout_825.addRule(RelativeLayout.BELOW,TextInput.getId());
+        Background.setLayoutParams(layout_825);
+        ImageContainer.addView(Background);
+
+        ImageView CircleImage = new ImageView(this);
+        CircleImage.setId(R.id.CircleImage);
+        CircleImage.setBackgroundResource(R.drawable.circle1);
+        RelativeLayout.LayoutParams layout_622 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);;
+        CircleImage.setLayoutParams(layout_622);
+        ImageContainer.addView(CircleImage);
+        relativeLayout_623.addView(ImageContainer);
+
+        Button ShakeButton = new Button(this);
+        ShakeButton.setText("SHAKE");
+        ShakeButton.setId(R.id.ShakeButton);
+        RelativeLayout.LayoutParams layout_333 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layout_333.addRule(RelativeLayout.BELOW, ImageContainer.getId());
+        ShakeButton.setLayoutParams(layout_333);
+        relativeLayout_623.addView(ShakeButton);
+
+        TextView Responder = new TextView(this);
+        Responder.setText(getResources().getString(R.string.blank));
+        Responder.setId(R.id.Responder);
+        Responder.setTextSize((30 / getApplicationContext().getResources().getDisplayMetrics().density));
+        Responder.setGravity(Gravity.CENTER);
+        Responder.setTypeface(Typeface.DEFAULT_BOLD);
+        Responder.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        RelativeLayout.LayoutParams layout_756 = new RelativeLayout.LayoutParams(300, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        Responder.setLayoutParams(layout_756);
+        relativeLayout_623.addView(Responder);
+
+
+        setContentView(relativeLayout_623);
 
         //When the ShakeButton is Pressed
-        shakeButton.setOnClickListener(new View.OnClickListener() {
+        ShakeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AskQuestion();
@@ -56,13 +115,6 @@ public class MainActivity extends ActionBarActivity {
         });
 
     }
-
-
-    public void createUI(){
-
-
-    }
-
 
 
     //Ask Question to the UI
@@ -113,17 +165,11 @@ public class MainActivity extends ActionBarActivity {
         }
 
 
-        Handler hStopper = new Handler();
-        hStopper.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ImageView img = (ImageView) findViewById(R.id.CircleImage);
-                AlphaAnimation animation1 = new AlphaAnimation(0.0f,1.0f);
-                animation1.setDuration(1000);
-                img.startAnimation(animation1);
-                img.startAnimation(animation1);
-            }
-        },1000);
+        ImageView img = (ImageView) findViewById(R.id.CircleImage);
+        AlphaAnimation animation1 = new AlphaAnimation(0.0f,1.0f);
+        animation1.setDuration(1000);
+        img.startAnimation(animation1);
+        img.startAnimation(animation1);
     }
 
 
